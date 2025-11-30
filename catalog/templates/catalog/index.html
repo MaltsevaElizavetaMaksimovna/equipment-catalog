@@ -1,0 +1,92 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Главная - Каталог оборудования{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Каталог оборудования предприятия</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Всего оборудования</h5>
+                <h2 class="card-text">{{ equipment_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Типов оборудования</h5>
+                <h2 class="card-text">{{ type_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Цехов</h5>
+                <h2 class="card-text">{{ workshop_count }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Возможности системы</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li>✅ Иерархический учет оборудования по цехам и площадкам</li>
+                    <li>✅ Различные типы оборудования с уникальными характеристиками</li>
+                    <li>✅ Хранение паспортов и документов</li>
+                    <li>✅ Поиск по характеристикам и параметрам</li>
+                    <li>✅ Добавление, редактирование и удаление оборудования</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Быстрые действия</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'equipment_list' %}" class="btn btn-primary">
+                        📋 Просмотреть весь каталог
+                    </a>
+                    <a href="{% url 'equipment_create' %}" class="btn btn-success">
+                        ➕ Добавить оборудование
+                    </a>
+                    <a href="/admin/" class="btn btn-secondary">
+                        ⚙️ Панель администратора
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h5>Инструкция по использованию:</h5>
+            <ol>
+                <li>Создайте цеха и площадки через <a href="/admin/">панель администратора</a></li>
+                <li>Добавьте типы оборудования</li>
+                <li>Добавьте оборудование через форму или админ-панель</li>
+                <li>Для каждого оборудования можно добавить характеристики и документы</li>
+                <li>Используйте поиск для быстрого нахождения нужного оборудования</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ equipment.name }} - Каталог оборудования{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ equipment.name }}</h1>
+    <div>
+        <a href="{% url 'equipment_edit' equipment.pk %}" class="btn btn-warning">✏️ Редактировать</a>
+        <a href="{% url 'equipment_delete' equipment.pk %}" class="btn btn-danger">🗑️ Удалить</a>
+        <a href="{% url 'equipment_list' %}" class="btn btn-secondary">← Назад к списку</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Основная информация</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th width="40%">Инвентарный номер:</th>
+                        <td><strong>{{ equipment.inventory_number }}</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Тип оборудования:</th>
+                        <td>{{ equipment.equipment_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Статус:</th>
+                        <td>
+                            <span class="badge badge-{{ equipment.status }}">
+                                {{ equipment.get_status_display }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Цех:</th>
+                        <td>{{ equipment.site.workshop }}</td>
+                    </tr>
+                    <tr>
+                        <th>Площадка:</th>
+                        <td>{{ equipment.site.name }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Технические данные</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th width="40%">Производитель:</th>
+                        <td>{{ equipment.manufacturer|default:"—" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Модель:</th>
+                        <td>{{ equipment.model|default:"—" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Серийный номер:</th>
+                        <td>{{ equipment.serial_number|default:"—" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Год выпуска:</th>
+                        <td>{{ equipment.year|default:"—" }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Характеристики -->
+{% if equipment.characteristics.all %}
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">Характеристики</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for char in equipment.characteristics.all %}
+            <div class="col-md-6 mb-2">
+                <strong>{{ char.name }}:</strong> {{ char.value }} {{ char.unit }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Документы -->
+{% if equipment.documents.all %}
+<div class="card mb-4">
+    <div class="card-header bg-warning">
+        <h5 class="mb-0">Документы</h5>
+    </div>
+    <div class="card-body">
+        <div class="list-group">
+            {% for doc in equipment.documents.all %}
+            <a href="{{ doc.file.url }}" class="list-group-item list-group-item-action" target="_blank">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">📄 {{ doc.title }}</h6>
+                    <small class="text-muted">{{ doc.uploaded_at|date:"d.m.Y" }}</small>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Примечания -->
+{% if equipment.notes %}
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Примечания</h5>
+    </div>
+    <div class="card-body">
+        <p>{{ equipment.notes|linebreaks }}</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Метаданные -->
+<div class="card mb-4">
+    <div class="card-body">
+        <small class="text-muted">
+            <strong>Добавлено:</strong> {{ equipment.created_at|date:"d.m.Y H:i" }} | 
+            <strong>Обновлено:</strong> {{ equipment.updated_at|date:"d.m.Y H:i" }}
+        </small>
+    </div>
+</div>
+{% endblock %}

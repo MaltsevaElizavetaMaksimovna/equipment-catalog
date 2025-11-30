@@ -1,0 +1,109 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="mb-4">{{ title }}</h1>
+        
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Ошибка!</strong> Пожалуйста, исправьте ошибки ниже.
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }} *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="text-danger">{{ form.name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.inventory_number.id_for_label }}" class="form-label">{{ form.inventory_number.label }} *</label>
+                            {{ form.inventory_number }}
+                            {% if form.inventory_number.errors %}
+                                <div class="text-danger">{{ form.inventory_number.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.equipment_type.id_for_label }}" class="form-label">{{ form.equipment_type.label }} *</label>
+                            {{ form.equipment_type }}
+                            {% if form.equipment_type.errors %}
+                                <div class="text-danger">{{ form.equipment_type.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.site.id_for_label }}" class="form-label">{{ form.site.label }} *</label>
+                            {{ form.site }}
+                            {% if form.site.errors %}
+                                <div class="text-danger">{{ form.site.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }} *</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="text-danger">{{ form.status.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.manufacturer.id_for_label }}" class="form-label">{{ form.manufacturer.label }}</label>
+                            {{ form.manufacturer }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.model.id_for_label }}" class="form-label">{{ form.model.label }}</label>
+                            {{ form.model }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.serial_number.id_for_label }}" class="form-label">{{ form.serial_number.label }}</label>
+                            {{ form.serial_number }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.year.id_for_label }}" class="form-label">{{ form.year.label }}</label>
+                            {{ form.year }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
+                        {{ form.notes }}
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+                        <a href="{% if equipment %}{% url 'equipment_detail' equipment.pk %}{% else %}{% url 'equipment_list' %}{% endif %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-3">
+            <strong>Примечание:</strong> Характеристики и документы можно добавить после создания оборудования через панель администратора.
+        </div>
+    </div>
+</div>
+{% endblock %}
