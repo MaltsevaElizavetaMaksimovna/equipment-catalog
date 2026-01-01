@@ -21,7 +21,6 @@ class SiteAdmin(admin.ModelAdmin):
     list_filter = ['workshop']
     search_fields = ['name']
 
-
 @admin.register(EquipmentType)
 class EquipmentTypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
@@ -32,11 +31,9 @@ class CharacteristicInline(admin.TabularInline):
     model = EquipmentCharacteristic
     extra = 2
 
-
 class DocumentInline(admin.TabularInline):
     model = EquipmentDocument
     extra = 1
-
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
